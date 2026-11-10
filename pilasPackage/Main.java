@@ -1,6 +1,6 @@
 package pilasPackage;
 
-public class main {
+public class Main {
 	 
 	public static void main(String[] args) {
 		testStack("StaticStack", new StaticStack<Integer>(2));
