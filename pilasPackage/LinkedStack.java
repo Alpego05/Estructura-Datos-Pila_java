@@ -1,60 +1,69 @@
 package pilasPackage;
 
+/**
+ * Implementacion dinamica del TAD Pila 
+ * @param <T> Tipo de los elementos de la pila
+ */
+
 public class LinkedStack<T> implements Stack<T> {
-	 
-	private Node<T> topNode;
-	private int elementCount;
- 
+	private Nodo<T> nodoCima;
+	private int contadorElementos;
+	
+	/** Constructor que inicializa una pila dinamica vacia */
 	public LinkedStack() {
-		topNode = null;
-		elementCount = 0;
+		nodoCima = null;
+		contadorElementos = 0;
 	}
  
 	@Override
-	public void push(T element) {
-		Node<T> newNode = new Node<T>(element, topNode);
-		topNode = newNode;
-		elementCount++;
+	public void push(T elemento) {
+		Nodo<T> nuevoNodo = new Nodo<T>(elemento, nodoCima);
+		nodoCima = nuevoNodo;
+		contadorElementos++;
 	}
  
 	@Override
 	public T pop() throws EmptyStackException {
 		if (isEmpty()) {
-			throw new EmptyStackException("pop: la pila está vacía");
+			throw new EmptyStackException("La pila esta vacia (Pop)");
 		}
-		T removedElement = topNode.getElement();
-		topNode = topNode.getNext();
-		elementCount--;
-		return removedElement;
+		T elementoQuitado = nodoCima.getElemento();
+		nodoCima = nodoCima.getSiguiente();
+		contadorElementos--;
+		return elementoQuitado;
 	}
  
 	@Override
 	public T top() throws EmptyStackException {
 		if (isEmpty()) {
-			throw new EmptyStackException("top: la pila está vacía");
+			throw new EmptyStackException("La pila esta vacia (Top)");
 		}
-		return topNode.getElement();
+		return nodoCima.getElemento();
 	}
  
 	@Override
 	public boolean isEmpty() {
-		return topNode == null;
+		return nodoCima == null;
 	}
  
 	@Override
 	public int size() {
-		return elementCount;
+		return contadorElementos;
 	}
  
 	@Override
 	public String toString() {
-		StringBuilder text = new StringBuilder("[");
-		for (Node<T> currentNode = topNode; currentNode != null; currentNode = currentNode.getNext()) {
-			text.append(currentNode.getElement());
-			if (currentNode.getNext() != null) {
-				text.append(", ");
-			}
-		}
-		return text.append("]").toString();
-	}
+        String resultado = "[";
+        Nodo<T> actual = nodoCima;
+        while (actual != null) {
+            resultado += actual.getElemento();
+            if (actual.getSiguiente() != null) {
+                resultado += ", ";
+            }
+            actual = actual.getSiguiente();
+        }
+        resultado += "]";
+        return resultado;
+    }
+
 }

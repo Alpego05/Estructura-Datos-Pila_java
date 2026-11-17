@@ -1,42 +1,60 @@
 package pilasPackage;
+/**
+ * Programa principal para probar y verificar el funcionamiento de las pilas
+ */
 
 public class Main {
-	 
+	/**
+     * Punto de entrada principal de la aplicacion
+     * @param args Argumentos recibidos por linea de comandos
+     */
 	public static void main(String[] args) {
-		testStack("StaticStack", new StaticStack<Integer>(2));
-		testStack("LinkedStack", new LinkedStack<Integer>());
+		probarPila("Pila Estatica", new StaticStack<>(2));
+        probarPila("Pila Dinamica", new LinkedStack<>());
+		
 	}
  
-	private static void testStack(String stackName, Stack<Integer> stack) {
-		System.out.println("=== " + stackName + " ===");
-		System.out.println( stack.isEmpty());
+	private static void probarPila(String nombrePila, Stack<Integer> pila) {
+		System.out.println("Probando:" + nombrePila);
+		
+		String estadoVacia = pila.isEmpty() ? "Sí" : "No";
+		System.out.println("¿La pila está vacía? " + estadoVacia);
  
-		for (int i = 1; i <= 5; i++) {
-			stack.push(i);
+		for (int numero = 1; numero <= 5; numero++) {
+            pila.push(numero);
+        }
+		
+		
+		System.out.println("Tras apilar del 1 al 5: " + pila + " (Tamaño: " + pila.size() + ")");
+        System.out.println("Elemento en la cima (top): " + pila.top());
+        
+        
+ 
+        int primeroEliminado = pila.pop();
+        int segundoEliminado = pila.pop();;
+        System.out.println("Elementos desapilados: " + primeroEliminado + ", " + segundoEliminado);
+        System.out.println("Estado actual de la pila: " + pila + " (Tamaño: " + pila.size() + ")");
+ 
+        while (!pila.isEmpty()) {
+            pila.pop();
 		}
-		System.out.println("Tras apilar 1..5: " + stack + " (size=" + stack.size() + ")");
-		System.out.println("top = " + stack.top());
- 
-		int firstRemoved = stack.pop();
-		int secondRemoved = stack.pop();
-		System.out.println("pop = " + firstRemoved + ", pop = " + secondRemoved);
-		System.out.println("Estado: " + stack + " (size=" + stack.size() + ")");
- 
-		while (!stack.isEmpty()) {
-			stack.pop();
-		}
-		System.out.println(stack.isEmpty());
+        String estadoVaciaFinal = pila.isEmpty() ? "Sí" : "No";
+        System.out.println("Pila vaciada. ¿Esta vacia? " + estadoVaciaFinal + "\n");
  
 		try {
-			stack.pop();
-		} catch (EmptyStackException exception) {
-			System.out.println(exception.getMessage());
-		}
-		try {
-			stack.top();
-		} catch (EmptyStackException exception) {
-			System.out.println(exception.getMessage());
-		}
-		System.out.println();  
+			pila.pop();
+        } catch (EmptyStackException excepcion) {
+        	System.out.println("Probando excepciones:");
+            System.out.println("Excepcion capturada: " + excepcion.getMessage());
+        }
+        
+        try {
+            pila.top();
+        } catch (EmptyStackException excepcion) {
+            System.out.println("Excepcion capturada: " + excepcion.getMessage());
+        }
+        System.out.println();
+    
 	}
+
 }
